@@ -11,10 +11,141 @@ html {
   --color-key-shadow2: hsl(224, 28%, 35%); 
   --color-key-background3: hsl(6, 63%, 50%);
   --color-key-shadow3: hsl(6, 70%, 34%);
-  --color-toggle: hsl(6, 63%, 50%); 
-  --color-text-primary: hsl(221, 14%, 31%); 
-  --color-text-secondary: hsl(0, 0, 100%); 
+  --color-toggle: hsl(6, 63%, 50%);
+  --color-text-primary: hsl(0, 0%, 100%);  
+  --color-text-secondary: hsl(221, 14%, 31%); 
 
   font-family: 'Spartan', sans-serif;
+
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-main-background);
+  color: var(--color-text-primary); 
+  position:absolute; height:100%; width:100%;
+  display: table;
+}
+
+.outer {
+  display: table-cell;
+  vertical-align: middle;
+  text-align:center;
+}
+
+.container {
+  margin-inline: auto; 
+  padding-inline: 1.5rem; 
+  max-width: 30rem; 
+}
+
+p {
+  margin: 0; 
+}
+
+.screen,
+.keypad {
+  margin-block: 0.7em; 
+  font-size: 2rem; 
+  border-radius: 0.4rem;
+}
+
+/* Header */ 
+header {
+  display: flex; 
+  justify-content: space-between;
+}
+
+.toggle-container {
+  font-size: 0.6rem; 
+  display: flex; 
+}
+
+.toggle-title {
+  display: flex;
+  align-items: center;
+  padding-top: 1.6em; 
+  margin-inline: 1.5em; 
+}
+
+.toggle {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 1em; 
+}
+
+.toggle-label-container {
+  display: flex;
+  justify-content: space-around;
+  padding-block: 0.5em; 
+}
+
+.toggle-tw {
+  background-color: var(--color-toggle-background);
+  border-radius: 1.6em;
+}
+
+.toggle-tw input {
+  appearance: none;
+  width: 1.1em; 
+  height: 1.1em; 
+  margin-inline: 0.1em;
+}
+
+.toggle-tw input:checked {
+  border-radius: 50%; 
+  box-shadow: inset 1.1em 1.1em var(--color-toggle);
+}
+
+/* Calculator screen */ 
+.screen {
+  background-color: var(--color-screen-background);
+  padding: 0.8em; 
+  text-align: right;
+  font-size: 2rem;
+}
+
+/* Calculator keypad */ 
+.keypad {
+  background-color: var(--color-keypad-background);
+  padding: 0.5em; 
+}
+
+.keypad-main {
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.keypad-bottom {
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+}
+
+.key {
+  background: var(--color-key-background1);
+  color: var(--color-text-secondary);
+  border-radius: 0.5rem; 
+  box-shadow: 0 0.3rem var(--color-key-shadow1);
+  border: none; 
+  font-size: 2rem; 
+  font-weight: 700; 
+  /* margin-inline: 0.4rem;  */
+  margin-inline: clamp(0.4rem, 1.5vw, 1rem); 
+  margin-block: clamp(0.5rem, 1.5vh, 1rem); 
+  padding-block: 0.6rem; 
+}
+
+.key-fn {
+  background-color: var(--color-key-background2);
+  box-shadow: 0 0.3rem var(--color-key-shadow2);
+  color: var(--color-text-primary);
+  font-size: 1rem; 
+}
+
+.key-equals {
+  background-color: var(--color-key-background3);
+  box-shadow: 0 0.3rem var(--color-key-shadow3);
+  color: var(--color-text-primary);
 }
 
