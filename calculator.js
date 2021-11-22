@@ -44,8 +44,10 @@ function operate(num1, num2, operator) {
 /* -- Input and display handling -- */ 
 function inputController(evt) {
   const key = evt.target;
+  if (key.classList.contains(`key-dec`)) {
+    handleDecimalInput();
 
-  if (key.classList.contains(`key-num`)) {
+  } else if (key.classList.contains(`key-num`)) {
     handleNumericInput(evt.target.dataset.value);
 
   } else if (key.classList.contains(`key-op`)) {
@@ -62,6 +64,18 @@ function inputController(evt) {
   }
 
   updateDisplay(); 
+}
+
+function handleDecimalInput() {
+  if (displayValue.includes(`.`) || displayValue === `_`) {
+    // only one decimal place allowed per value, and decimal cannot be leading
+    return; 
+
+  } else {
+    displayValue = `${displayValue}.`;
+  }
+
+  operand2 = +displayValue; 
 }
 
 function handleNumericInput(num) {
@@ -113,20 +127,27 @@ function updateDisplay() {
 }
 
 function insertDecimalSeparators(numString) {
-  // Convert to array
-  numArray = [...numString];
+  // Convert whole number part of the string to an array
+  let wholeNumArray = []; 
+  let decimalString = ``; 
+  if (numString.includes(`.`)) {
+    wholeNumArray = [...numString.split(`.`)[0]]; 
+    decimalString = `.${numString.split(`.`)[1]}`; 
+  } else {
+    wholeNumArray = [...numString]; 
+  }
 
-  // Insert decimal separator every third digit from the right hand side
-  numArray = numArray.map((digit, index) => {
-    if ((numArray.length - index) % 3 === 0 && index > 0) {
+  // Insert decimal separator every third whole digit from the right hand side
+  wholeNumArray = wholeNumArray.map((digit, index) => {
+    if ((wholeNumArray.length - index) % 3 === 0 && index > 0) {
       return `,${digit}`;
     } else {
       return digit; 
     }
   });
 
-  // Convert back to string and return 
-  return numArray.join(``); 
+  // Convert back to one string and return 
+  return `${wholeNumArray.join(``)}${decimalString}`; 
 }
 
 /* -- Query selectors -- */
