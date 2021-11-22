@@ -143,7 +143,7 @@ header {
   font-size: 1rem; 
 }
 
-.key-equals {
+.key-op[data-value="="] {
   background-color: var(--color-key-background3);
   box-shadow: 0 0.3rem var(--color-key-shadow3);
   color: var(--color-text-primary);
