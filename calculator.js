@@ -1,9 +1,11 @@
+/* -- Constants -- */ 
+const maxDisplayDigits = 11; 
+
 /* -- Global variables -- */ 
 let operand1 = null; 
 let operand2 = null; 
 let operationInProgress  = null;
 let displayValue = `_`;
-let lastKey;  
 
 /* -- Calculation logic -- */ 
 function add(num1, num2) { 
@@ -58,20 +60,17 @@ function inputController(evt) {
 
   } else if (key.dataset.value === `reset`) {
     reset(); 
-
-  } else {
-    console.log(`ERROR: Unkown input`);
-  }
+  } 
 
   updateDisplay(); 
 }
 
 function handleDecimalInput() {
-  if (displayValue.includes(`.`) || displayValue === `_`) {
-    // only one decimal place allowed per value, and decimal cannot be leading
+  if (displayValue.includes(`.`) || displayValue === `_` || operand2 === null) {
+    // Only one decimal place allowed per value, and decimal cannot be leading
     return; 
 
-  } else {
+  } else if (displayValue.length < maxDisplayDigits) {
     displayValue = `${displayValue}.`;
   }
 
@@ -82,7 +81,7 @@ function handleNumericInput(num) {
   if (displayValue === `0` || displayValue === `_` || operand2 === null) {
     displayValue = `${num}`;
 
-  } else {
+  } else if (displayValue.length < maxDisplayDigits) {
     displayValue = `${displayValue}${num}`;
   }
 
@@ -94,12 +93,12 @@ function handleOperatorInput(operator) {
     return; // there is no operation to be done, so ignore
   }
 
-  // perform the operation
+  // Perform the operation
   operand2 = +displayValue; 
   operand1 = operate(operand1, operand2, operationInProgress);
   displayValue = `${operand1}`; 
 
-  // setup for the next operation
+  // Setup for the next operation
   operand2 = null; 
   operationInProgress = operator; 
 }
@@ -123,16 +122,39 @@ function reset() {
 }
 
 function updateDisplay() {
-  display.textContent = insertDecimalSeparators(displayValue); 
+  if (displayValue === `Infinity`) {
+    display.textContent = `Inf`; 
+
+  } else {
+    display.textContent = insertDecimalSeparators(displayValue); 
+  }
 }
 
 function insertDecimalSeparators(numString) {
-  // Convert whole number part of the string to an array
+  // Ensure the output fits within the display length
+  const wholeNumLength = `${Math.floor(+numString)}`.length;
+  if (wholeNumLength > maxDisplayDigits) {
+    // Return an out of range message if the whole number portion is too long
+    return `Out of range`;
+
+  } else if (numString.length > maxDisplayDigits) {
+    // Round any decimal portion to fit within the display length
+    numString = (+numString).toFixed(maxDisplayDigits 
+      - wholeNumLength);
+    
+    // Remove any trailing zeros after decimal place
+    numString = `${parseFloat(numString)}`;
+  }
+
+  // Convert whole number part of the string to an array and store the decimal 
+  // part of the string 
   let wholeNumArray = []; 
   let decimalString = ``; 
   if (numString.includes(`.`)) {
+
     wholeNumArray = [...numString.split(`.`)[0]]; 
     decimalString = `.${numString.split(`.`)[1]}`; 
+
   } else {
     wholeNumArray = [...numString]; 
   }
@@ -141,13 +163,14 @@ function insertDecimalSeparators(numString) {
   wholeNumArray = wholeNumArray.map((digit, index) => {
     if ((wholeNumArray.length - index) % 3 === 0 && index > 0) {
       return `,${digit}`;
+
     } else {
       return digit; 
     }
   });
 
-  // Convert back to one string and return 
-  return `${wholeNumArray.join(``)}${decimalString}`; 
+  // Combine the whole number part and decimal part and return
+  return `${wholeNumArray.join(``)}${decimalString}`;
 }
 
 /* -- Query selectors -- */
