@@ -43,6 +43,16 @@ function operate(num1, num2, operator) {
   }
 }
 
+/* -- Actions to perform on window load -- */ 
+function onLoad() {
+  // Set the theme that is toggle on
+  themeToggle.forEach((theme) => {
+    if (theme.checked) {
+      setTheme(theme.value);
+    }
+  }); 
+}
+
 /* -- Input and display handling -- */ 
 function inputController(evt) {
   const key = evt.target;
@@ -173,10 +183,31 @@ function insertDecimalSeparators(numString) {
   return `${wholeNumArray.join(``)}${decimalString}`;
 }
 
+/* -- Theme seclection -- */ 
+function themeSelector(evt) {
+  setTheme(evt.target.value);
+}
+
+function setTheme(themeNumber) {
+  // remove any existing theme
+  htmlEl.classList.forEach((className) => { 
+    if (className.includes(`theme`)) {
+      htmlEl.classList.remove(className); 
+    }
+  });
+
+  // add the selected theme 
+  htmlEl.classList.add(`theme-${themeNumber}`);
+}
+
 /* -- Query selectors -- */
 const display = document.querySelector(`.screen p`);
 const keys = document.querySelectorAll(`.key`);
+const themeToggle = document.querySelectorAll(`.toggle-tw input`);
+const htmlEl = document.querySelector(`html`); 
 
 /* -- Event listeners -- */ 
 keys.forEach(key => key.addEventListener(`click`, inputController));
+themeToggle.forEach(theme => theme.addEventListener(`click`, themeSelector));
+window.addEventListener(`load`, onLoad()); 
 
