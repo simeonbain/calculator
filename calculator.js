@@ -65,8 +65,8 @@ function inputController(evt) {
   } else if (key.classList.contains(`key-op`)) {
     handleOperatorInput(evt.target.dataset.value);
 
-  } else if (key.dataset.value === `clear`) {
-    clear();
+  } else if (key.dataset.value === `backspace`) {
+    backspace();
 
   } else if (key.dataset.value === `reset`) {
     reset(); 
@@ -113,15 +113,21 @@ function handleOperatorInput(operator) {
   operationInProgress = operator; 
 }
 
-function clear() {
-  if (displayValue !== `_` && operand1 !== null) {
-    displayValue = `${operand1}`;
+function backspace() {
+  if (operand2 === null) {
+    operationInProgress = null; 
+    return; 
 
   } else {
-    displayValue = `_`;
-  }
+    displayValue = displayValue.slice(0, -1); 
 
-  operationInProgress = null; 
+    if (displayValue === ``) {
+      displayValue = `_`;
+      operand2 = null; 
+    } else {
+      operand2 = +displayValue;
+    }
+  }
 }
 
 function reset() {
