@@ -34,7 +34,7 @@ function operate(num1, num2, operator) {
       return add(num1, num2); 
     case '-': 
       return subtract(num1, num2); 
-    case `x`:
+    case `*`:
       return multiply(num1, num2);
     case `/`:
       return divide(num1, num2); 
@@ -53,8 +53,8 @@ function onLoad() {
   }); 
 }
 
-/* -- Input and display handling -- */ 
-function inputController(evt) {
+/* -- Mouse/touch input -- */ 
+function screenInputController(evt) {
   const key = evt.target;
   if (key.classList.contains(`key-dec`)) {
     handleDecimalInput();
@@ -75,6 +75,29 @@ function inputController(evt) {
   updateDisplay(); 
 }
 
+/* -- Keyboard input -- */ 
+function keyboardInputController(evt) {
+  console.log(evt.key); 
+  if (evt.key === `.`) {
+    handleDecimalInput(); 
+
+  } else if (/^\d+$/.test(evt.key)) {
+    handleNumericInput(evt.key);
+
+  } else if (/[\+\-\*\=]/.test(evt.key) || evt.key === `Enter`) {
+    handleOperatorInput(evt.key);
+
+  } else if (evt.key === `Backspace`) {
+    backspace(); 
+
+  } else if (evt.key === `Escape`) {
+    reset(); 
+  }
+
+  updateDisplay(); 
+}
+
+/* -- Input and display handling -- */ 
 function handleDecimalInput() {
   if (displayValue.includes(`.`) || displayValue === `_` || operand2 === null) {
     // Only one decimal place allowed per value, and decimal cannot be leading
@@ -218,6 +241,7 @@ const themeToggle = document.querySelectorAll(`.toggle-tw input`);
 const htmlEl = document.querySelector(`html`); 
 
 /* -- Event listeners -- */ 
-keys.forEach(key => key.addEventListener(`click`, inputController));
+keys.forEach(key => key.addEventListener(`click`, screenInputController));
 themeToggle.forEach(theme => theme.addEventListener(`click`, themeSelector));
 window.addEventListener(`load`, onLoad); 
+document.addEventListener(`keydown`, keyboardInputController);
