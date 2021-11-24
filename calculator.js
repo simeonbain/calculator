@@ -77,20 +77,26 @@ function screenInputController(evt) {
 
 /* -- Keyboard input -- */ 
 function keyboardInputController(evt) {
+
   console.log(evt.key); 
   if (evt.key === `.`) {
+    evt.preventDefault();
     handleDecimalInput(); 
 
   } else if (/^\d+$/.test(evt.key)) {
+    evt.preventDefault();
     handleNumericInput(evt.key);
 
   } else if (/[\+\-\*\=]/.test(evt.key) || evt.key === `Enter`) {
+    evt.preventDefault();
     handleOperatorInput(evt.key);
 
   } else if (evt.key === `Backspace`) {
+    evt.preventDefault();
     backspace(); 
 
   } else if (evt.key === `Escape`) {
+    evt.preventDefault();
     reset(); 
   }
 
