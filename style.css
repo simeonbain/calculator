@@ -130,13 +130,15 @@ header {
 .toggle-tw {
   background-color: var(--color-toggle-background);
   border-radius: 1.6rem;
+  display: flex; 
 }
 
 .toggle-tw input {
   appearance: none;
-  width: 1.1em; 
-  height: 1.1em; 
-  margin-inline: 0.1em;
+  -webkit-appearance: none;
+  width: 1.3em; 
+  height: 1.3em; 
+  margin: 0.4em 0.2em;
 }
 
 .toggle-tw input:checked {
