@@ -167,12 +167,17 @@ function insertDecimalSeparators(numString) {
   let wholeNumArray = []; 
   let decimalString = ``; 
   if (numString.includes(`.`)) {
-
     wholeNumArray = [...numString.split(`.`)[0]]; 
     decimalString = `.${numString.split(`.`)[1]}`; 
 
   } else {
     wholeNumArray = [...numString]; 
+  }
+  
+  // Pull out the negative sign, if any
+  let signString = ``;
+  if (wholeNumArray[0] === `-`) {
+    signString = wholeNumArray.shift();
   }
 
   // Insert decimal separator every third whole digit from the right hand side
@@ -186,7 +191,7 @@ function insertDecimalSeparators(numString) {
   });
 
   // Combine the whole number part and decimal part and return
-  return `${wholeNumArray.join(``)}${decimalString}`;
+  return `${signString}${wholeNumArray.join(``)}${decimalString}`;
 }
 
 /* -- Theme seclection -- */ 
