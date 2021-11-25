@@ -229,7 +229,7 @@ function insertDecimalSeparators(numString) {
   return `${signString}${wholeNumArray.join(``)}${decimalString}`;
 }
 
-/* -- Theme seclection -- */ 
+/* -- Theme selection -- */ 
 function themeSelector(evt) {
   setTheme(evt.target.value);
 }
@@ -254,6 +254,6 @@ const htmlEl = document.querySelector(`html`);
 
 /* -- Event listeners -- */ 
 keys.forEach(key => key.addEventListener(`click`, screenInputController));
+document.addEventListener(`keydown`, keyboardInputController);
 themeToggle.forEach(theme => theme.addEventListener(`click`, themeSelector));
 window.addEventListener(`load`, onLoad); 
-document.addEventListener(`keydown`, keyboardInputController);
