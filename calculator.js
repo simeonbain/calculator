@@ -100,7 +100,6 @@ function keyboardInputController(evt) {
 
   } else {
     validInput = false; 
-    console.log(`here`);
   }
 
   if (validInput) {
