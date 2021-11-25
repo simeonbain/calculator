@@ -56,6 +56,7 @@ function onLoad() {
 /* -- Mouse/touch input -- */ 
 function screenInputController(evt) {
   const key = evt.target;
+
   if (key.classList.contains(`key-dec`)) {
     handleDecimalInput();
 
@@ -77,27 +78,33 @@ function screenInputController(evt) {
 
 /* -- Keyboard input -- */ 
 function keyboardInputController(evt) {
+  let validInput = true; 
 
-  console.log(evt.key); 
   if (evt.key === `.`) {
-    evt.preventDefault();
     handleDecimalInput(); 
 
   } else if (/^\d+$/.test(evt.key)) {
-    evt.preventDefault();
     handleNumericInput(evt.key);
 
-  } else if (/[\+\-\*\=]/.test(evt.key) || evt.key === `Enter`) {
-    evt.preventDefault();
+  } else if (/[\+\-\*\/\=]/.test(evt.key)) {
     handleOperatorInput(evt.key);
 
+  } else if (evt.key === `Enter`) {
+    handleOperatorInput(`=`);
+
   } else if (evt.key === `Backspace`) {
-    evt.preventDefault();
     backspace(); 
 
   } else if (evt.key === `Escape`) {
-    evt.preventDefault();
     reset(); 
+
+  } else {
+    validInput = false; 
+    console.log(`here`);
+  }
+
+  if (validInput) {
+    evt.preventDefault();
   }
 
   updateDisplay(); 
