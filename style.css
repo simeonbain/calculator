@@ -112,6 +112,7 @@ header {
   align-items: center;
   padding-top: 1.6em; 
   padding-inline: 1.5em; 
+  text-transform: uppercase;
 }
 
 .toggle {
