@@ -10,9 +10,13 @@ Features:
 - Basic calculator functionality, including decimal points
 - Delete: backspaces the last input
 - Reset: resets the calculator
+- Keyboard input for calculations
+- Responsive design
+- Special handling of touch inputs for better user experience on touch screens
 
 Known limitations: 
 - The calculator can handle and display negative numbers, but the user cannot input negative numbers themself currently
+- The calculator can only display a maximum of 11 digits on the screen. Therefore inputs are limited to this amount of digits, and calculation results that exceed this will show an 'Out of range' message. 
 
 ## Technologies
 - HTML
@@ -20,4 +24,7 @@ Known limitations:
 - JavaScript
 
 ## Motivation
-This project was created to re-inforce HTML, CSS, and JavaScript fundamental concepts. The visual design is from [Frontend Mentor](https://www.frontendmentor.io/).
+This project was created as an exercise to apply HTML, CSS, and JavaScript fundamental concepts. 
+
+## Acknowledgements
+The visual design is from [Frontend Mentor](https://www.frontendmentor.io/).
