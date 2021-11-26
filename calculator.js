@@ -286,6 +286,7 @@ const htmlEl = document.querySelector(`html`);
 const display = document.querySelector(`.screen p`);
 const keys = document.querySelectorAll(`.key`);
 const themeToggle = document.querySelectorAll(`.toggle-tw input`);
+const themeToggleContainer = document.querySelector(`.toggle`);
 
 /* -- Event listeners -- */ 
 window.addEventListener(`load`, onLoad); 
@@ -293,4 +294,4 @@ keys.forEach(key => key.addEventListener(`click`, screenInputController));
 keys.forEach(key => key.addEventListener(`touchstart`, touchStartInput));
 document.addEventListener(`keydown`, keyboardInputController);
 themeToggle.forEach(theme => theme.addEventListener(`click`, themeSelector));
-themeToggle.forEach(theme => theme.addEventListener(`touchstart`, themeLooper));
+themeToggleContainer.addEventListener(`touchstart`, themeLooper);
