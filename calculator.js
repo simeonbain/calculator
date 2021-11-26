@@ -45,7 +45,7 @@ function operate(num1, num2, operator) {
 
 /* -- Actions to perform on window load -- */ 
 function onLoad() {
-  // Set the theme that is toggle on
+  // Set the theme that is toggled on
   themeToggle.forEach(theme => {
     if (theme.checked) {
       setTheme(theme.value);
@@ -76,6 +76,13 @@ function screenInputController(evt) {
   updateDisplay(); 
 }
 
+function touchStartInput(evt) {
+  // Prevent any further handling (eg. click event on the same element)
+  evt.preventDefault(); 
+
+  screenInputController(evt); 
+}
+
 /* -- Keyboard input -- */ 
 function keyboardInputController(evt) {
   let validInput = true; 
@@ -103,6 +110,7 @@ function keyboardInputController(evt) {
   }
 
   if (validInput) {
+    // Prevent any browser actions tied to these keyboard keys
     evt.preventDefault();
   }
 
@@ -234,6 +242,38 @@ function themeSelector(evt) {
   setTheme(evt.target.value);
 }
 
+function themeLooper(evt) {
+  // Prevent any further handling (eg. click event on the same element)
+  evt.preventDefault(); 
+
+  // Find which theme is currently set
+  const numThemes = themeToggle.length; 
+  let currentThemeIndex = null; 
+  themeToggle.forEach((theme, index) => {
+    if (theme.checked) {
+      currentThemeIndex = index; 
+    }
+  });
+  console.log(currentThemeIndex); 
+
+  // Work out which theme is next in the loop
+  let newThemeIndex = null; 
+  if (currentThemeIndex === numThemes - 1) {
+    newThemeIndex = 0;
+    console.log(`here`);
+  } else {
+    newThemeIndex = currentThemeIndex + 1; 
+    console.log(`there`);
+  } 
+  console.log(numThemes);
+  console.log(newThemeIndex); 
+
+  // Disable the current theme and set the next theme
+  themeToggle[currentThemeIndex].checked = false; 
+  themeToggle[newThemeIndex].checked = true; 
+  setTheme(themeToggle[newThemeIndex].value); 
+}
+
 function setTheme(themeNumber) {
   // remove any existing theme
   htmlEl.classList.forEach(className => { 
@@ -247,13 +287,15 @@ function setTheme(themeNumber) {
 }
 
 /* -- Query selectors -- */
+const htmlEl = document.querySelector(`html`); 
 const display = document.querySelector(`.screen p`);
 const keys = document.querySelectorAll(`.key`);
 const themeToggle = document.querySelectorAll(`.toggle-tw input`);
-const htmlEl = document.querySelector(`html`); 
 
 /* -- Event listeners -- */ 
+window.addEventListener(`load`, onLoad); 
 keys.forEach(key => key.addEventListener(`click`, screenInputController));
+keys.forEach(key => key.addEventListener(`touchstart`, touchStartInput));
 document.addEventListener(`keydown`, keyboardInputController);
 themeToggle.forEach(theme => theme.addEventListener(`click`, themeSelector));
-window.addEventListener(`load`, onLoad); 
+themeToggle.forEach(theme => theme.addEventListener(`touchstart`, themeLooper));
