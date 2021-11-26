@@ -254,19 +254,14 @@ function themeLooper(evt) {
       currentThemeIndex = index; 
     }
   });
-  console.log(currentThemeIndex); 
 
   // Work out which theme is next in the loop
   let newThemeIndex = null; 
   if (currentThemeIndex === numThemes - 1) {
     newThemeIndex = 0;
-    console.log(`here`);
   } else {
     newThemeIndex = currentThemeIndex + 1; 
-    console.log(`there`);
-  } 
-  console.log(numThemes);
-  console.log(newThemeIndex); 
+  }  
 
   // Disable the current theme and set the next theme
   themeToggle[currentThemeIndex].checked = false; 
