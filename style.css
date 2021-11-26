@@ -7,6 +7,9 @@ html {
 
   padding: 0; 
   margin: 0; 
+
+  --key-box-shadow-offset-x: 0.3rem;
+  --key-box-shadow-offset-x-active: 0.2rem; 
 }
 
 body {
@@ -173,10 +176,10 @@ header {
 }
 
 .key {
-  background: var(--color-key-background1);
+  background-color: var(--color-key-background1);
   color: var(--color-text-secondary);
   border-radius: 0.5rem; 
-  box-shadow: 0 0.3rem var(--color-key-shadow1);
+  box-shadow: 0 var(--key-box-shadow-offset-x) var(--color-key-shadow1);
   border: none; 
   font-size: 2rem; 
   font-weight: 700; 
@@ -188,14 +191,26 @@ header {
 
 .key-fn {
   background-color: var(--color-key-background2);
-  box-shadow: 0 0.3rem var(--color-key-shadow2);
+  box-shadow: 0 var(--key-box-shadow-offset-x) var(--color-key-shadow2);
   color: var(--color-text-tertiary);
   font-size: 1rem; 
 }
 
 .key-op[data-value="="] {
   background-color: var(--color-key-background3);
-  box-shadow: 0 0.3rem var(--color-key-shadow3);
+  box-shadow: 0 var(--key-box-shadow-offset-x) var(--color-key-shadow3);
   color: var(--color-text-quaternary);
 }
 
+.key:active {
+  transform: translateY(0.1rem);
+  box-shadow: 0 var(--key-box-shadow-offset-x-active) var(--color-key-shadow1);
+}
+
+.key-fn:active {
+  box-shadow: 0 var(--key-box-shadow-offset-x-active) var(--color-key-shadow2);
+}
+
+.key-op[data-value="="] {
+  box-shadow: 0 var(--key-box-shadow-offset-x-active) var(--color-key-shadow3);
+}
