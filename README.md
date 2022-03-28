@@ -1,6 +1,6 @@
 # Calculator
 
-[Live Preview](https://simeonbain.github.io/calculator)
+[Live Site](https://simeonbain.github.io/calculator)
 
 ## Overview
 A responsive calculator web app. 
